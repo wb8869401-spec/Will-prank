@@ -1,0 +1,245 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Device Security Alert</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: #050505;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+
+        .screen {
+            min-height: 100vh;
+            width: 100%;
+            padding: 25px 18px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .warning-icon {
+            font-size: 75px;
+        }
+
+        .warning {
+            color: #ff2020;
+            font-size: clamp(32px, 9vw, 58px);
+            text-shadow: 0 0 18px red;
+            animation: flash 0.8s infinite alternate;
+        }
+
+        .message {
+            color: #cccccc;
+            font-size: 17px;
+            line-height: 1.6;
+        }
+
+        .status {
+            color: #ff3333;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        .timer {
+            font-size: 64px;
+            font-weight: bold;
+            color: #ff2424;
+            margin: 15px;
+            text-shadow: 0 0 15px #ff0000;
+        }
+
+        .question {
+            color: #ff3030;
+            font-size: clamp(25px, 7vw, 38px);
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin: 15px 0;
+        }
+
+        .buttons button {
+            background: #c90000;
+            color: white;
+            border: 2px solid #ff5555;
+            border-radius: 10px;
+            padding: 16px 25px;
+            font-size: 21px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .buttons button:active {
+            transform: scale(0.95);
+        }
+
+        #reaction {
+            color: #ff5555;
+            font-weight: bold;
+        }
+
+        .reveal {
+            display: none;
+            background: radial-gradient(circle, #242424, #000000 75%);
+        }
+
+        .reveal h1 {
+            color: #39ff88;
+            font-size: clamp(42px, 11vw, 68px);
+        }
+
+        .reveal h2 {
+            color: #ffd43b;
+            font-size: clamp(30px, 8vw, 48px);
+            text-shadow: 0 0 15px #aa7700;
+        }
+
+        .crown {
+            font-size: 85px;
+        }
+
+        @keyframes flash {
+            from {
+                opacity: 1;
+            }
+            to {
+                opacity: 0.45;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- WARNING SCREEN -->
+
+    <main class="screen" id="warningScreen">
+
+        <div class="warning-icon">⚠️</div>
+
+        <h1 class="warning">
+            YOU HAVE BEEN HACKED!
+        </h1>
+
+        <p class="status">
+            DEVICE SECURITY COMPROMISED
+        </p>
+
+        <p class="message">
+            Suspicious activity detected on your device.
+        </p>
+
+        <p class="message">
+            If you want to save your device, click one of the buttons.
+        </p>
+
+        <div class="timer" id="timer">02:00</div>
+
+        <p class="message">
+            Security countdown in progress...
+        </p>
+
+        <h2 class="question">
+            ARE YOU GAY?!!
+        </h2>
+
+        <div class="buttons">
+            <button onclick="revealPrank('YES')">
+                A. YES
+            </button>
+
+            <button onclick="revealPrank('NO')">
+                B. NO iam
+            </button>
+        </div>
+
+        <p id="reaction" class="message"></p>
+
+    </main>
+
+
+    <!-- FINAL REVEAL SCREEN -->
+
+    <section class="screen reveal" id="revealScreen">
+
+        <div class="crown">😂👑😂</div>
+
+        <h1>RELAX!</h1>
+
+        <p style="font-size: 22px;">
+            YOU HAVE BEEN PRANKED BY
+        </p>
+
+        <h2>WILLIAM THE GREAT!</h2>
+
+        <p class="message">
+            Your phone is safe! 🤣
+        </p>
+
+        <p class="message">
+            Don't forget who got you! 😂🤝
+        </p>
+
+    </section>
+
+
+    <script>
+        let seconds = 120;
+
+        let finished = false;
+
+        const timer = document.getElementById("timer");
+
+        function revealPrank(answer) {
+            if (finished) return;
+
+            finished = true;
+
+            document.getElementById("warningScreen")
+                .style.display = "none";
+
+            document.getElementById("revealScreen")
+                .style.display = "flex";
+        }
+
+        const countdown = setInterval(function () {
+
+            if (finished) {
+                clearInterval(countdown);
+                return;
+            }
+
+            seconds--;
+
+            const minutes = Math.floor(seconds / 60);
+            const remainingSeconds = seconds % 60;
+
+            timer.textContent =
+                String(minutes).padStart(2, "0") + ":" +
+                String(remainingSeconds).padStart(2, "0");
+
+            if (seconds <= 0) {
+                clearInterval(countdown);
+                revealPrank("TIME");
+            }
+
+        }, 1000);
+    </script>
+
+</body>
+</html>
